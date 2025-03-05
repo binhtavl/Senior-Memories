@@ -1,0 +1,8 @@
+.nowrap {
+    white-space: nowrap;
+  }
+  
+.title {
+  font-size: 2.5em;
+  /* Các thuộc tính khác vẫn giữ nguyên */
+}
