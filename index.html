@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <!-- Nếu bạn muốn thiết bị hiển thị giống desktop, có thể sử dụng viewport cố định -->
+  <!-- Ở đây, nếu muốn ép giao diện giống desktop, dùng viewport cố định -->
   <meta name="viewport" content="width=800">
   <title>Senior Memories</title>
   <!-- Import font Pacifico cho caption -->
@@ -20,6 +20,7 @@
       padding: 20px;
       min-height: 100vh;
     }
+    /* Container cố định 800px */
     .container {
       width: 800px;
       margin: 0 auto;
@@ -102,7 +103,7 @@
       background: var(--accent-color);
       pointer-events: none;
     }
-    /* Scroll-triggered animation */
+    /* Animation khi cuộn trang */
     .animate-on-scroll {
       opacity: 0;
       transform: translateY(20px);
@@ -112,7 +113,7 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Keyframes */
+    /* Keyframes cho tiêu đề */
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
@@ -155,12 +156,13 @@
         <p class="detail-item animate-on-scroll">📸 Sự kiện: Chụp kỉ yếu</p>
       </div>
 
+      <!-- Nút gửi dữ liệu -->
       <button class="join-button" onclick="handleJoin()">Tham gia chụp kỉ yếu cùng tớ!</button>
     </div>
   </div>
 
   <script>
-    // Sử dụng IntersectionObserver để kích hoạt animation khi phần tử xuất hiện trong viewport
+    // Sử dụng IntersectionObserver để bật animation khi phần tử xuất hiện trong viewport
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -172,7 +174,7 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-    // Hàm tạo hiệu ứng confetti (giữ nguyên code nếu đã có)
+    // Hàm tạo hiệu ứng confetti (giữ nguyên nếu đã có)
     function createConfetti() {
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
@@ -194,7 +196,7 @@
       setTimeout(() => confetti.remove(), 5000);
     }
 
-    // Hàm xử lý khi nút được nhấn
+    // Hàm xử lý khi nhấn nút
     function handleJoin() {
       // Hiệu ứng confetti
       for (let i = 0; i < 50; i++) {
@@ -205,8 +207,8 @@
         timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent
       };
-      // Gửi dữ liệu đến backend qua fetch POST request
-      fetch('https://your-backend-endpoint.com/api/save', {  // Thay URL bằng endpoint của bạn
+      // Gửi dữ liệu đến backend bằng fetch POST request
+      fetch('https://your-backend-endpoint.com/api/save', {  // Thay URL bằng endpoint backend của bạn
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
