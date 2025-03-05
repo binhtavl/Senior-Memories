@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Senior Memories</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dashboard - Tham gia chụp kỉ yếu</h1>
+  <table id="dashboardTable">
+    <thead>
+      <tr>
+        <th>Thời gian</th>
+        <th>Thiết bị (User Agent)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dữ liệu sẽ được chèn vào đây -->
+    </tbody>
+  </table>
+
+  <script>
+    // Lấy dữ liệu từ backend
+    fetch('https://your-backend-endpoint.com/api/participants')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById('dashboardTable').querySelector('tbody');
+        data.participants.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${item.timestamp}</td>
+            <td>${item.userAgent}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
+</body>
+</html>
