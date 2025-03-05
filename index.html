@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <!-- Viewport cố định 800px giúp hiển thị giống desktop trên mọi thiết bị -->
+  <!-- Nếu bạn muốn thiết bị hiển thị giống desktop, có thể sử dụng viewport cố định -->
   <meta name="viewport" content="width=800">
   <title>Senior Memories</title>
   <!-- Import font Pacifico cho caption -->
@@ -13,7 +13,6 @@
       --secondary-color: #CD853F;
       --accent-color: #D2B48C;
     }
-
     body {
       font-family: 'Playfair Display', serif;
       background: linear-gradient(45deg, #fff8e7, #ffe4c4);
@@ -21,20 +20,16 @@
       padding: 20px;
       min-height: 100vh;
     }
-
-    /* Container được cố định chiều rộng 800px */
     .container {
       width: 800px;
       margin: 0 auto;
       animation: fadeIn 1.5s ease-in;
     }
-
     .header {
       text-align: center;
       padding: 30px;
       position: relative;
     }
-
     .title {
       font-size: 2.5em;
       color: var(--primary-color);
@@ -42,11 +37,7 @@
       animation: float 3s ease-in-out infinite, titleGlow 2s ease-in-out infinite;
       margin: 0;
     }
-
-    .nowrap {
-      white-space: nowrap;
-    }
-
+    .nowrap { white-space: nowrap; }
     .handwrite-caption {
       font-family: 'Pacifico', cursive;
       font-size: 1.8em;
@@ -54,17 +45,15 @@
       text-align: center;
       margin: 20px 0;
     }
-
     .invitation-card {
       background: rgba(255, 255, 255, 0.9);
       border-radius: 15px;
       padding: 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       margin: 20px 0;
       transform-style: preserve-3d;
       transition: transform 0.3s;
     }
-
     .image-container {
       width: 100%;
       height: 400px;
@@ -74,25 +63,21 @@
       margin: 20px 0;
       position: relative;
     }
-
     .image-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.3s;
     }
-
     .details {
       text-align: center;
       margin: 30px 0;
     }
-
     .detail-item {
       font-size: 1.2em;
       margin: 15px 0;
       color: var(--primary-color);
     }
-
     .join-button {
       background: var(--primary-color);
       color: white;
@@ -104,14 +89,12 @@
       transition: all 0.3s;
       display: block;
       margin: 20px auto;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
-
     .join-button:hover {
       transform: scale(1.1);
       background: var(--secondary-color);
     }
-
     .confetti {
       position: fixed;
       width: 10px;
@@ -119,7 +102,6 @@
       background: var(--accent-color);
       pointer-events: none;
     }
-
     /* Scroll-triggered animation */
     .animate-on-scroll {
       opacity: 0;
@@ -130,7 +112,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
     /* Keyframes */
     @keyframes float {
       0%, 100% { transform: translateY(0); }
@@ -145,7 +126,6 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
     .invitation-card:hover {
       transform: rotateY(5deg) rotateX(5deg);
     }
@@ -161,9 +141,7 @@
         Senior Memories<br>
         Thiệp mời chụp kỉ yếu cùng&nbsp;<span class="nowrap">Kass!</span>
       </h1>
-      <p class="handwrite-caption animate-on-scroll">
-        Hãy sống trọn vẹn, chụp từng khoảnh khắc!
-      </p>
+      <p class="handwrite-caption animate-on-scroll">Hãy sống trọn vẹn, chụp từng khoảnh khắc!</p>
     </div>
 
     <div class="invitation-card animate-on-scroll">
@@ -192,23 +170,9 @@
         }
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-    function handleJoin() {
-      for (let i = 0; i < 50; i++) {
-        createConfetti();
-      }
-      const participantData = {
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent
-      };
-      setTimeout(() => {
-        alert('Đã ghi nhận tham gia của bạn!');
-      }, 800);
-      console.log('Data participant:', participantData);
-    }
-
+    // Hàm tạo hiệu ứng confetti (giữ nguyên code nếu đã có)
     function createConfetti() {
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
@@ -228,6 +192,33 @@
         easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       });
       setTimeout(() => confetti.remove(), 5000);
+    }
+
+    // Hàm xử lý khi nút được nhấn
+    function handleJoin() {
+      // Hiệu ứng confetti
+      for (let i = 0; i < 50; i++) {
+        createConfetti();
+      }
+      // Thu thập dữ liệu
+      const participantData = {
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      };
+      // Gửi dữ liệu đến backend qua fetch POST request
+      fetch('https://your-backend-endpoint.com/api/save', {  // Thay URL bằng endpoint của bạn
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(participantData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Đã ghi nhận tham gia của bạn!');
+        console.log('Data saved:', data);
+      })
+      .catch(error => console.error('Error:', error));
     }
   </script>
 </body>
