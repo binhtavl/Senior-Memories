@@ -33,7 +33,6 @@
       position: relative;
     }
 
-    /* Giảm kích cỡ chữ tiêu đề */
     .title {
       font-size: 2.5em;
       color: var(--primary-color);
@@ -145,45 +144,11 @@
       to { opacity: 1; }
     }
 
-    /* Hover effects */
     .invitation-card:hover {
       transform: rotateY(5deg) rotateX(5deg);
     }
     .image-container:hover img {
       transform: scale(1.05);
-    }
-
-    /* Responsive design cho điện thoại */
-    @media only screen and (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      .header {
-        padding: 20px;
-      }
-      .title {
-        font-size: 1.8em;
-      }
-      .handwrite-caption {
-        font-size: 1.4em;
-      }
-      .invitation-card {
-        padding: 15px;
-        margin: 15px 0;
-      }
-      .image-container {
-        height: 250px;
-        margin: 15px 0;
-      }
-      .detail-item {
-        font-size: 1em;
-        margin: 10px 0;
-      }
-      .join-button {
-        padding: 10px 20px;
-        font-size: 1em;
-        margin: 15px auto;
-      }
     }
   </style>
 </head>
