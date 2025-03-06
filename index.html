@@ -2,13 +2,14 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <!-- Ép giao diện cố định với chiều rộng 800px -->
-  <meta name="viewport" content="width=800">
+  <!-- Sử dụng viewport chuẩn để hỗ trợ responsive, nhưng vẫn giữ container 800px -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Senior Memories - Thiệp mời chụp kỉ yếu cùng Kass. Hãy sống trọn vẹn, chụp từng khoảnh khắc!">
   <title>Senior Memories</title>
-  <!-- Import font Pacifico cho caption và tiêu đề -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <!-- Import Google Fonts: Pacifico cho caption và Playfair Display cho nội dung -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset cơ bản cho html và body */
+    /* Reset cơ bản và thiết lập chung */
     html, body {
       margin: 0;
       padding: 0;
@@ -16,6 +17,10 @@
       box-sizing: border-box;
       background: linear-gradient(45deg, #fff8e7, #ffe4c4, #fff8e7);
       background-size: 400% 400%;
+      font-family: 'Playfair Display', serif;
+      animation: gradientAnimation 15s ease infinite;
+      position: relative;
+      overflow-x: hidden;
     }
     *, *::before, *::after {
       box-sizing: inherit;
@@ -25,7 +30,7 @@
       --secondary-color: #CD853F;
       --accent-color: #D2B48C;
     }
-    /* Phần tử background-effect với hiệu ứng bokeh động */
+    /* Hiệu ứng background bokeh */
     .background-effect {
       position: fixed;
       top: 0;
@@ -41,19 +46,12 @@
       from { transform: translate(0, 0); }
       to { transform: translate(-30px, -30px); }
     }
-    /* Background gradient animation */
     @keyframes gradientAnimation {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    body {
-      font-family: 'Playfair Display', serif;
-      animation: gradientAnimation 15s ease infinite;
-      position: relative;
-      overflow-x: hidden;
-    }
-    /* Floating particles background */
+    /* Floating particles */
     .particles {
       position: fixed;
       top: 0;
@@ -76,7 +74,7 @@
       0% { transform: translateY(0) scale(1); opacity: 1; }
       100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
     }
-    /* Định vị các hạt (10 hạt mẫu) */
+    /* Định vị các hạt mẫu */
     .particle:nth-child(1) { left: 5%; animation-duration: 10s; animation-delay: 0s; }
     .particle:nth-child(2) { left: 15%; animation-duration: 12s; animation-delay: 2s; }
     .particle:nth-child(3) { left: 25%; animation-duration: 14s; animation-delay: 4s; }
@@ -87,8 +85,7 @@
     .particle:nth-child(8) { left: 75%; animation-duration: 14s; animation-delay: 4s; }
     .particle:nth-child(9) { left: 85%; animation-duration: 11s; animation-delay: 1s; }
     .particle:nth-child(10) { left: 95%; animation-duration: 13s; animation-delay: 3s; }
-    
-    /* Container cố định 800px */
+    /* Container với chiều rộng cố định */
     .container {
       width: 800px;
       margin: 20px auto;
@@ -97,7 +94,7 @@
       z-index: 1;
       color: #333;
     }
-    .header {
+    header {
       text-align: center;
       padding: 30px;
     }
@@ -224,7 +221,7 @@
   </style>
 </head>
 <body>
-  <!-- Background elements -->
+  <!-- Các hiệu ứng nền -->
   <div class="background-effect"></div>
   <div class="particles">
     <span class="particle"></span>
@@ -238,30 +235,32 @@
     <span class="particle"></span>
     <span class="particle"></span>
   </div>
-  
+
   <div class="container">
-    <div class="header">
+    <header>
       <h1 class="title animate-on-scroll">
         Senior Memories<br>
         Thiệp mời chụp kỉ yếu cùng&nbsp;<span class="nowrap">Kass!</span>
       </h1>
       <p class="handwrite-caption animate-on-scroll">Hãy sống trọn vẹn, chụp từng khoảnh khắc!</p>
-    </div>
-    <div class="invitation-card animate-on-scroll" id="invitationCard">
-      <div class="image-container">
-        <img src="IMG_1628.jpeg" alt="Kỷ yếu">
+    </header>
+    <main>
+      <div class="invitation-card animate-on-scroll" id="invitationCard">
+        <div class="image-container">
+          <img src="IMG_1628.jpeg" alt="Kỷ yếu">
+        </div>
+        <div class="details">
+          <p class="detail-item animate-on-scroll">📍 Trường THCS&THPT Quảng La</p>
+          <p class="detail-item animate-on-scroll">⏰ 8h sáng Chủ Nhật, 23/3/2025</p>
+          <figure class="detail-item animate-on-scroll" style="margin: 15px 0; text-align: center;">
+            <figcaption>📸 Hành trình kỉ yếu – Ghi dấu tuổi trẻ, lưu giữ kỉ niệm bất tận</figcaption>
+          </figure>
+        </div>
+        <button class="join-button" onclick="handleJoin(event)">Tham gia chụp kỉ yếu cùng tớ!</button>
       </div>
-      <div class="details">
-        <p class="detail-item animate-on-scroll">📍 Trường THCS&THPT Quảng La</p>
-        <p class="detail-item animate-on-scroll">⏰ 8h sáng Chủ Nhật, 23/3/2025</p>
-        <figure class="detail-item animate-on-scroll" style="margin: 15px 0; text-align: center;">
-          <figcaption>📸 Hành trình kỉ yếu – Ghi dấu tuổi trẻ, lưu giữ kỉ niệm bất tận</figcaption>
-        </figure>
-      </div>
-      <button class="join-button" onclick="handleJoin(event)">Tham gia chụp kỉ yếu cùng tớ!</button>
-    </div>
+    </main>
   </div>
-  
+
   <script>
     // Sử dụng IntersectionObserver để bật animation khi phần tử xuất hiện trong viewport
     const observer = new IntersectionObserver(entries => {
@@ -274,7 +273,7 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-  
+
     // Hàm tạo hiệu ứng confetti
     function createConfetti() {
       const confetti = document.createElement('div');
@@ -296,7 +295,7 @@
       });
       setTimeout(() => confetti.remove(), 5000);
     }
-  
+
     // Hiệu ứng ripple cho nút "Tham gia"
     document.querySelectorAll('.join-button').forEach(btn => {
       btn.addEventListener('click', function(e) {
@@ -311,15 +310,15 @@
         setTimeout(() => circle.remove(), 600);
       });
     });
-  
-    // Hàm xử lý khi nhấn nút "Tham gia" (chỉ kích hoạt confetti)
+
+    // Xử lý khi nhấn nút "Tham gia" để kích hoạt confetti
     function handleJoin(e) {
       e.stopPropagation();
       for (let i = 0; i < 50; i++) {
         createConfetti();
       }
     }
-  
+
     // Hiệu ứng parallax cho thiệp mời khi di chuột
     const invitationCard = document.getElementById('invitationCard');
     invitationCard.addEventListener('mousemove', function(e) {
@@ -334,7 +333,7 @@
     invitationCard.addEventListener('mouseleave', function() {
       invitationCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
     });
-  
+
     // Parallax cho background-effect khi cuộn trang
     window.addEventListener("scroll", function(){
       const scrollY = window.scrollY;
