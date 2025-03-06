@@ -2,41 +2,120 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <!-- Ở đây, nếu muốn ép giao diện giống desktop, dùng viewport cố định -->
+  <!-- Ép giao diện cố định với chiều rộng 800px -->
   <meta name="viewport" content="width=800">
   <title>Senior Memories</title>
-  <!-- Import font Pacifico cho caption -->
+  <!-- Import font Pacifico cho caption và tiêu đề -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
+    /* Reset cơ bản cho html và body */
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      box-sizing: border-box;
+      background: linear-gradient(45deg, #fff8e7, #ffe4c4, #fff8e7);
+      background-size: 400% 400%;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
     :root {
       --primary-color: #8B4513;
       --secondary-color: #CD853F;
       --accent-color: #D2B48C;
     }
+    /* Phần tử background-effect với hiệu ứng bokeh động */
+    .background-effect {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 50%);
+      animation: moveBg 12s infinite alternate;
+      z-index: -1;
+    }
+    @keyframes moveBg {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-30px, -30px); }
+    }
+    /* Background gradient animation */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
     body {
       font-family: 'Playfair Display', serif;
-      background: linear-gradient(45deg, #fff8e7, #ffe4c4);
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
+      animation: gradientAnimation 15s ease infinite;
+      position: relative;
+      overflow-x: hidden;
     }
+    /* Floating particles background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+    }
+    .particle {
+      position: absolute;
+      bottom: -150px;
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      animation: floatUp 12s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
+    }
+    /* Định vị các hạt (10 hạt mẫu) */
+    .particle:nth-child(1) { left: 5%; animation-duration: 10s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 15%; animation-duration: 12s; animation-delay: 2s; }
+    .particle:nth-child(3) { left: 25%; animation-duration: 14s; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 35%; animation-duration: 11s; animation-delay: 1s; }
+    .particle:nth-child(5) { left: 45%; animation-duration: 13s; animation-delay: 3s; }
+    .particle:nth-child(6) { left: 55%; animation-duration: 10s; animation-delay: 0s; }
+    .particle:nth-child(7) { left: 65%; animation-duration: 12s; animation-delay: 2s; }
+    .particle:nth-child(8) { left: 75%; animation-duration: 14s; animation-delay: 4s; }
+    .particle:nth-child(9) { left: 85%; animation-duration: 11s; animation-delay: 1s; }
+    .particle:nth-child(10) { left: 95%; animation-duration: 13s; animation-delay: 3s; }
+    
     /* Container cố định 800px */
     .container {
       width: 800px;
-      margin: 0 auto;
+      margin: 20px auto;
       animation: fadeIn 1.5s ease-in;
+      position: relative;
+      z-index: 1;
+      color: #333;
     }
     .header {
       text-align: center;
       padding: 30px;
-      position: relative;
     }
     .title {
       font-size: 2.5em;
-      color: var(--primary-color);
+      color: transparent;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+      background-size: 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
       text-shadow: 0 0 5px var(--primary-color);
-      animation: float 3s ease-in-out infinite, titleGlow 2s ease-in-out infinite;
+      animation: float 3s ease-in-out infinite, titleGlow 2s ease-in-out infinite, shine 3s linear infinite;
       margin: 0;
+    }
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     .nowrap { white-space: nowrap; }
     .handwrite-caption {
@@ -47,13 +126,14 @@
       margin: 20px 0;
     }
     .invitation-card {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255,255,255,0.92);
       border-radius: 15px;
       padding: 30px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      margin: 20px 0;
+      margin-bottom: 40px;
       transform-style: preserve-3d;
       transition: transform 0.3s;
+      perspective: 1000px;
     }
     .image-container {
       width: 100%;
@@ -68,7 +148,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s;
+      transition: transform 0.3s, filter 0.3s;
+    }
+    .image-container:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.1);
     }
     .details {
       text-align: center;
@@ -91,10 +175,22 @@
       display: block;
       margin: 20px auto;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
     }
     .join-button:hover {
       transform: scale(1.1);
       background: var(--secondary-color);
+    }
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      transform: scale(0);
+      animation: rippleAnimation 0.6s linear;
+    }
+    @keyframes rippleAnimation {
+      to { transform: scale(4); opacity: 0; }
     }
     .confetti {
       position: fixed;
@@ -103,7 +199,6 @@
       background: var(--accent-color);
       pointer-events: none;
     }
-    /* Animation khi cuộn trang */
     .animate-on-scroll {
       opacity: 0;
       transform: translateY(20px);
@@ -113,7 +208,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Keyframes cho tiêu đề */
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
@@ -127,15 +221,24 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    .invitation-card:hover {
-      transform: rotateY(5deg) rotateX(5deg);
-    }
-    .image-container:hover img {
-      transform: scale(1.05);
-    }
   </style>
 </head>
 <body>
+  <!-- Background elements -->
+  <div class="background-effect"></div>
+  <div class="particles">
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+    <span class="particle"></span>
+  </div>
+  
   <div class="container">
     <div class="header">
       <h1 class="title animate-on-scroll">
@@ -144,23 +247,21 @@
       </h1>
       <p class="handwrite-caption animate-on-scroll">Hãy sống trọn vẹn, chụp từng khoảnh khắc!</p>
     </div>
-
-    <div class="invitation-card animate-on-scroll">
+    <div class="invitation-card animate-on-scroll" id="invitationCard">
       <div class="image-container">
         <img src="IMG_1628.jpeg" alt="Kỷ yếu">
       </div>
-
       <div class="details">
         <p class="detail-item animate-on-scroll">📍 Trường THCS&THPT Quảng La</p>
-        <p class="detail-item animate-on-scroll">⏰ 8h sáng Chủ Nhật, 26/3/2025</p>
-        <p class="detail-item animate-on-scroll">📸 Sự kiện: Chụp kỉ yếu</p>
+        <p class="detail-item animate-on-scroll">⏰ 8h sáng Chủ Nhật, 23/3/2025</p>
+        <figure class="detail-item animate-on-scroll" style="margin: 15px 0; text-align: center;">
+          <figcaption>📸 Hành trình kỉ yếu – Ghi dấu tuổi trẻ, lưu giữ kỉ niệm bất tận</figcaption>
+        </figure>
       </div>
-
-      <!-- Nút gửi dữ liệu -->
-      <button class="join-button" onclick="handleJoin()">Tham gia chụp kỉ yếu cùng tớ!</button>
+      <button class="join-button" onclick="handleJoin(event)">Tham gia chụp kỉ yếu cùng tớ!</button>
     </div>
   </div>
-
+  
   <script>
     // Sử dụng IntersectionObserver để bật animation khi phần tử xuất hiện trong viewport
     const observer = new IntersectionObserver(entries => {
@@ -173,8 +274,8 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-    // Hàm tạo hiệu ứng confetti (giữ nguyên nếu đã có)
+  
+    // Hàm tạo hiệu ứng confetti
     function createConfetti() {
       const confetti = document.createElement('div');
       confetti.classList.add('confetti');
@@ -195,33 +296,50 @@
       });
       setTimeout(() => confetti.remove(), 5000);
     }
-
-    // Hàm xử lý khi nhấn nút
-    function handleJoin() {
-      // Hiệu ứng confetti
+  
+    // Hiệu ứng ripple cho nút "Tham gia"
+    document.querySelectorAll('.join-button').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const circle = document.createElement('span');
+        circle.classList.add('ripple');
+        this.appendChild(circle);
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        circle.style.width = circle.style.height = size + 'px';
+        circle.style.left = e.clientX - rect.left - size / 2 + 'px';
+        circle.style.top = e.clientY - rect.top - size / 2 + 'px';
+        setTimeout(() => circle.remove(), 600);
+      });
+    });
+  
+    // Hàm xử lý khi nhấn nút "Tham gia" (chỉ kích hoạt confetti)
+    function handleJoin(e) {
+      e.stopPropagation();
       for (let i = 0; i < 50; i++) {
         createConfetti();
       }
-      // Thu thập dữ liệu
-      const participantData = {
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent
-      };
-      // Gửi dữ liệu đến backend bằng fetch POST request
-      fetch('https://your-backend-endpoint.com/api/save', {  // Thay URL bằng endpoint backend của bạn
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(participantData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Đã ghi nhận tham gia của bạn!');
-        console.log('Data saved:', data);
-      })
-      .catch(error => console.error('Error:', error));
     }
+  
+    // Hiệu ứng parallax cho thiệp mời khi di chuột
+    const invitationCard = document.getElementById('invitationCard');
+    invitationCard.addEventListener('mousemove', function(e) {
+      const rect = invitationCard.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const maxTilt = 10;
+      const tiltX = (y / (rect.height / 2)) * maxTilt;
+      const tiltY = -(x / (rect.width / 2)) * maxTilt;
+      invitationCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    });
+    invitationCard.addEventListener('mouseleave', function() {
+      invitationCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+  
+    // Parallax cho background-effect khi cuộn trang
+    window.addEventListener("scroll", function(){
+      const scrollY = window.scrollY;
+      document.querySelector(".background-effect").style.transform = `translateY(${scrollY * 0.5}px)`;
+    });
   </script>
 </body>
 </html>
