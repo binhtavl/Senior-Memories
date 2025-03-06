@@ -2,7 +2,6 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <!-- Sử dụng viewport chuẩn để hỗ trợ responsive, nhưng vẫn giữ container 800px -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Senior Memories - Thiệp mời chụp kỉ yếu cùng Kass. Hãy sống trọn vẹn, chụp từng khoảnh khắc!">
   <title>Senior Memories</title>
@@ -85,10 +84,12 @@
     .particle:nth-child(8) { left: 75%; animation-duration: 14s; animation-delay: 4s; }
     .particle:nth-child(9) { left: 85%; animation-duration: 11s; animation-delay: 1s; }
     .particle:nth-child(10) { left: 95%; animation-duration: 13s; animation-delay: 3s; }
-    /* Container với chiều rộng cố định */
+    /* Container responsive */
     .container {
-      width: 800px;
+      width: 100%;
+      max-width: 800px;
       margin: 20px auto;
+      padding: 0 20px;
       animation: fadeIn 1.5s ease-in;
       position: relative;
       z-index: 1;
@@ -96,7 +97,7 @@
     }
     header {
       text-align: center;
-      padding: 30px;
+      padding: 30px 0;
     }
     .title {
       font-size: 2.5em;
@@ -218,10 +219,29 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+    /* Media queries cho mobile */
+    @media (max-width: 600px) {
+      .title {
+        font-size: 2em;
+      }
+      .handwrite-caption {
+        font-size: 1.5em;
+      }
+      .detail-item {
+        font-size: 1em;
+      }
+      .join-button {
+        padding: 10px 20px;
+        font-size: 1em;
+      }
+      .image-container {
+        height: 250px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Các hiệu ứng nền -->
+  <!-- Background elements -->
   <div class="background-effect"></div>
   <div class="particles">
     <span class="particle"></span>
@@ -251,7 +271,7 @@
         </div>
         <div class="details">
           <p class="detail-item animate-on-scroll">📍 Trường THCS&THPT Quảng La</p>
-          <p class="detail-item animate-on-scroll">⏰ 8h sáng Chủ Nhật, 23/3/2025</p>
+          <p class="detail-item animate-on-scroll">⏰ 8h sáng Chủ Nhật, 26/3/2025</p>
           <figure class="detail-item animate-on-scroll" style="margin: 15px 0; text-align: center;">
             <figcaption>📸 Hành trình kỉ yếu – Ghi dấu tuổi trẻ, lưu giữ kỉ niệm bất tận</figcaption>
           </figure>
@@ -319,21 +339,23 @@
       }
     }
 
-    // Hiệu ứng parallax cho thiệp mời khi di chuột
+    // Hiệu ứng parallax cho thiệp mời khi di chuột (chỉ kích hoạt trên desktop)
     const invitationCard = document.getElementById('invitationCard');
-    invitationCard.addEventListener('mousemove', function(e) {
-      const rect = invitationCard.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      const maxTilt = 10;
-      const tiltX = (y / (rect.height / 2)) * maxTilt;
-      const tiltY = -(x / (rect.width / 2)) * maxTilt;
-      invitationCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-    });
-    invitationCard.addEventListener('mouseleave', function() {
-      invitationCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
-    });
-
+    if (!('ontouchstart' in window)) {
+      invitationCard.addEventListener('mousemove', function(e) {
+        const rect = invitationCard.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const maxTilt = 10;
+        const tiltX = (y / (rect.height / 2)) * maxTilt;
+        const tiltY = -(x / (rect.width / 2)) * maxTilt;
+        invitationCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      });
+      invitationCard.addEventListener('mouseleave', function() {
+        invitationCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+    
     // Parallax cho background-effect khi cuộn trang
     window.addEventListener("scroll", function(){
       const scrollY = window.scrollY;
